@@ -5,17 +5,16 @@ exports.sendMessage = async (req, res) => {
   try {
     const { conversationId, senderId, text } = req.body;
     
-    // Create and save the new message
     const newMessage = new Message({ conversationId, senderId, text });
     await newMessage.save();
 
-    // Identify the receiver to update their unread count
+ 
     const conversation = await Conversation.findById(conversationId);
     const receiverId = conversation.participants.find(
       (p) => p.toString() !== senderId.toString()
     );
 
-    // Update the parent conversation's last message and timestamp
+
     await Conversation.findByIdAndUpdate(conversationId, {
       lastMessage: text,
       $inc: { [`unreadCount.${receiverId}`]: 1 }

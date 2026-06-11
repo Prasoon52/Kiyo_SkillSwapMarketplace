@@ -9,12 +9,12 @@ mongoose.connect(MONGO_URI)
   .then(async () => {
     console.log('Connected to DB. Creating dummy conversation...');
 
-    // Generate valid MongoDB ObjectIDs
+
     const user1 = new mongoose.Types.ObjectId();
     const user2 = new mongoose.Types.ObjectId();
     const mockSwapRequestId = new mongoose.Types.ObjectId();
 
-    // Create a new conversation
+
     const mockConversation = new Conversation({
       participants: [user1, user2],
       swapRequestId: mockSwapRequestId
